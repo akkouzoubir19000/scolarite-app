@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: scolarite-db
+    environment:
+      POSTGRES_DB: scolarite
+      POSTGRES_USER: scolarite
+      POSTGRES_PASSWORD: change-me-in-development
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scolarite -d scolarite"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
